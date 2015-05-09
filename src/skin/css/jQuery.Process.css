@@ -1,0 +1,34 @@
+.loading-mask{
+	min-width:100px;  
+	background-color:#000; 
+	filter:alpha(opacity=30); 
+	background-color: rgba(0,0,0,0.3); 
+	color: #fff; 
+	border:none;
+	width:100%;
+	height:100%;
+}
+
+.dialog-moves{
+	position:absolute; 
+	border:3px solid #666; 
+	border:3px solid rgba(0,0,0,.5); 
+	cursor:move; 
+	background-color:#fff; 
+	background-color:rgba(255,255,255,.3); 
+	filter:alpha(opacity=30);
+}
+
+.loading-tip{
+	color:#ffffff; 
+	font-size:20px;
+}
+
+.loading-box{
+	position:absolute;
+	display:none;
+	border:solid 0px #D1D1D1;
+	background:#4B981D;
+	padding:5px 15px;
+	text-align:center;
+}
