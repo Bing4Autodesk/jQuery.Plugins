@@ -36,7 +36,7 @@ if ( typeof Object.create !== 'function' ) {
 		__init: function(opts){
 		
 			var self=this;
-			opts=$.extend( {}, self.options, opts );
+			opts=$.extend( {}, self.__options, opts );
 			self.options=opts;
 			
 			var $tipdom=$('<div></div>');
@@ -64,27 +64,35 @@ if ( typeof Object.create !== 'function' ) {
 			$tipdom.css('left','{0}px'.format(hleft)).css('top','{0}px'.format(vtop));
 			$tipdom.html(self.__template4tip.format(opts.tipinfo));
 			
-			$tipdom.css('float','none').css('z-index','99');
+			$tipdom.css('float','none').css('z-index','9999999');
 			
 			self.$tipElem=$tipdom;
+			
 					
 		},
 		show: function(){
-			var self=this;
+			var self=this,$tipDom;
+			
 			if($('#tipbox').length==0){
 				$('body').append(self.$tipElem);
 			}
-			self.$tipElem.show(); 
+			$tipDom=$('#tipbox');
+			
 			self.__showmask();
+			$tipDom.css('display','block'); 
+			
+			$(window).on('resize', function(){
+					self.__autooffset();
+			});
 			
 			return self;
 		},
 		
 		close: function(){
-			var self=this;
+			var self=this,$tipDom=$('#tipbox');
 			
-			if($('#tipbox').length!=0){
-				self.$tipElem.hide(); 
+			if($tipDom.length!=0){
+				$tipDom.css('display','none'); 
 			}
 			
 			self.__hidemask();
@@ -124,6 +132,23 @@ if ( typeof Object.create !== 'function' ) {
 			}  
 		},
 		
+		__autooffset:function(){
+		
+			var self = this, $win=$(window),
+				config = self.__configuration,
+				$tipdom=$('#tipbox');
+				
+			if($tipdom.length!=0){
+			
+				var area = [$tipdom.outerWidth(), $tipdom.outerHeight()];
+			
+				self.offsetTop = ($win.height() - area[1])/2;
+				self.offsetLeft = ($win.width() - area[0])/2;
+		
+				$tipdom.css({top: self.offsetTop, left: self.offsetLeft});
+			}
+		},
+		
 		__options:{
 			iwidth:120,iheight:0,
 			scrolltop:0,scrollleft:0,
@@ -132,7 +157,7 @@ if ( typeof Object.create !== 'function' ) {
 			tipinfo:'loading...'
 		},
 		
-		__template4tip:'<img src=\'skin/image/loading.gif\'/>  <p><span class=\'loading-tip\'>{0}</span></p>'
+		__template4tip:'<img src=\'src/skin/image/loading.gif\'/>  <p><span class=\'loadingTip\'>{0}</span></p>'
 		
 	};
 	
@@ -146,6 +171,8 @@ if ( typeof Object.create !== 'function' ) {
 		}
 		var dialogObj = Object.create( LoadingDialog );
 		dialogObj.__init( options);
+		
+		$.Dialogcahe.singletonLoading=dialogObj;
 		
 		return dialogObj;
 	};

@@ -36,7 +36,7 @@
 
 .message-content{
 	position:relative;
-
+	overflow:auto;
 }
 
 .message-move{

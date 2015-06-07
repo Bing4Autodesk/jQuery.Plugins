@@ -50,7 +50,9 @@ if ( typeof Object.create !== 'function' ) {
 			var zIndex = self.__configuration.zIndex + 1;
 			
 			var $titledom=$('<div></div>');
-			$titledom.attr('id','message-title').addClass('message-title').text(self.__options.title);
+			//$titledom.attr('id','message-title').addClass('message-title').text(self.__options.title);
+			
+			$titledom.attr('id','message-title').addClass('message-title').html(self.__options.title);
 			
 			var $winboxdom=$('<span></span>');
 			$winboxdom.addClass('message-winbox');
@@ -62,6 +64,7 @@ if ( typeof Object.create !== 'function' ) {
 			
 			var $contentdom=$('<div></div>');
 			$contentdom.attr('id','message-content').addClass('message-content');
+			
 			$contentdom.html(self.__options.content||'');
 			
 			

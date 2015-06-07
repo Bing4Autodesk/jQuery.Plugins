@@ -1,8 +1,8 @@
 .loading-mask{
 	min-width:100px;  
 	background-color:#000; 
-	filter:alpha(opacity=30); 
-	background-color: rgba(0,0,0,0.3); 
+	background-color:rgba(255,255,255,.7); 
+	filter:alpha(opacity=70);
 	color: #fff; 
 	border:none;
 	width:100%;
@@ -19,16 +19,17 @@
 	filter:alpha(opacity=30);
 }
 
-.loading-tip{
-	color:#ffffff; 
-	font-size:20px;
+.loadingTip{
+	font-size:13px;
 }
 
 .loading-box{
 	position:absolute;
 	display:none;
 	border:solid 0px #D1D1D1;
+	/*
 	background:#4B981D;
+	*/
 	padding:5px 15px;
 	text-align:center;
 }
