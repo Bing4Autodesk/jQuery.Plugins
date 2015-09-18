@@ -463,6 +463,8 @@ if ( typeof Object.isPositiveInt !== 'function' ){
 		return true;;
 	};
 	
+	var _jQFixedTable=$.jQFixedTable;
+	
 	$.extend(
 	{
 		///
@@ -471,5 +473,14 @@ if ( typeof Object.isPositiveInt !== 'function' ){
 		jQFixedTable:jQTableWrapper
 	});
 	
+	///
+    /// noConflict api for jQFixedTable plugin
+    ///
+    $.jQFixedTable.noConflict = function () {
+		
+		$.jQFixedTable = _jQFixedTable;
+		
+        return jQTableWrapper;
+    };
 		
 })(jQuery, window, document);
