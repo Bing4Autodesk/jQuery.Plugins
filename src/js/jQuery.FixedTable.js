@@ -18,7 +18,7 @@
  ///
  /// Clone a new object
  ///
-if ( typeof Object.create !== 'function' ) {
+;if ( typeof Object.create !== 'function' ) {
     Object.create = function( obj ) {
         function F() {}
         F.prototype = obj;
