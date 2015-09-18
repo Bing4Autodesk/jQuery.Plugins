@@ -1,0 +1,58 @@
+﻿{
+	header:{
+		numText:"序号",
+		data:["","2014年报","2014一季报","2013年报","2013一季报","2012年报","2012一季报"]
+	},
+	
+	body:{
+		'1':['币种','人民币','人民币','人民币','人民币','人民币','人民币'],
+		'2':['<b>资产</b>','','','','','',''],
+		'3':['&nbsp;&nbsp;银行存款(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="3" charttitle="银行存款" unit="元">','2,295,702.24','14,485,689.49','2,295,702.24','14,485,689.49','2,295,702.24','14,485,689.49'],
+		"4":['&nbsp;&nbsp;结算备付金(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="4" charttitle="结算备付金" unit="元">','315,824.29','133,238.31','315,824.29','133,238.31','315,824.29','133,238.31'],
+		"5":['&nbsp;&nbsp;存出保证金(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="5" charttitle="存出保证金" unit="元">','40,916.97','117,302.20','40,916.97','117,302.20','40,916.97','117,302.20'],
+		"6":['&nbsp;&nbsp;交易性金融资产(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="6" charttitle="交易性金融资产" unit="元">','57,770,883.13','56,787,631.42','57,770,883.13','56,787,631.42','57,770,883.13','56,787,631.42'],
+		"7":['&nbsp;&nbsp;其中:股票投资(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="7" charttitle="股票投资" unit="元">',"42,572,582.03","56,787,631.42","42,572,582.03","56,787,631.42","42,572,582.03","56,787,631.42"],
+		"8":['&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基金投资(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="8" charttitle="基金投资" unit="元">','4,500,451.10','-','4,500,451.10','-','4,500,451.10','-'],
+		"9":['&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;债券投资(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="9" charttitle="债券投资" unit="元">','10,697,850.00','-','10,697,850.00','-','10,697,850.00','-'],
+		"10":['&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;资产支持证券投资(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="10" charttitle="资产支持证券投资" unit="元">','-','-','-','-','-','-'],
+		"11":['&nbsp;&nbsp;衍生金融资产(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="11" charttitle="衍生金融资产" unit="元">','-','-','-','-','-','-'],
+		"12":['&nbsp;&nbsp;买入返售金融资产(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="12" charttitle="买入返售金融资产" unit="元">','-','-','-','-','-','-'],
+		"13":['&nbsp;&nbsp;银行理财投资(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="13" charttitle="银行理财投资" unit="元">','-','-','-','-','-','-'],
+		"14":['&nbsp;&nbsp;信托投资(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="14" charttitle="信托投资" unit="元">','-','-','-','-','-','-'],
+		"15":['&nbsp;&nbsp;应收证券清算款(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="15" charttitle="应收证券清算款" unit="元">','267,668.40','-','267,668.40','-','267,668.40','-'],
+		"16":['&nbsp;&nbsp;应收利息(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="16" charttitle="应收利息" unit="元">','29,243.48','1,962.82','29,243.48','1,962.82','29,243.48','1,962.82'],
+		"17":['&nbsp;&nbsp;应收股利(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="17" charttitle="应收股利" unit="元">','-','-','-','-','-','-'],
+		"18":['&nbsp;&nbsp;应收申购款(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="18" charttitle="应收申购款" unit="元">','-','-','-','-','-','-'],
+		"19":['&nbsp;&nbsp;应收基金红利(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="19" charttitle="应收基金红利" unit="元">','-','-','-','-','-','-'],
+		"20":['&nbsp;&nbsp;应收信托投资收益(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="20" charttitle="应收信托投资收益" unit="元">','-','-','-','-','-','-'],
+		"21":['&nbsp;&nbsp;递延所得税资产(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="21" charttitle="递延所得税资产" unit="元">','-','-','-','-','-','-'],
+		"22":['&nbsp;&nbsp;其他资产(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="22" charttitle="其他资产" unit="元">','-','-','-','-','-','-'],
+		"23":['&nbsp;&nbsp;资产总计(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="23" charttitle="资产总计" unit="元">','60,720,238.51','71,525,824.24','60,720,238.51','71,525,824.24','60,720,238.51','71,525,824.24'],
+		"24":['<b>负债</b>','','','','','',''],
+		"25":['&nbsp;&nbsp;短期借款(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="25" charttitle="短期借款" unit="元">','-','-','-','-','-','-'],
+		"26":['&nbsp;&nbsp;交易性金融负债(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="26" charttitle="交易性金融负债" unit="元">','-','-','-','-','-','-'],
+		"27":['&nbsp;&nbsp;衍生金融负债(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="27" charttitle="衍生金融负债" unit="元">','-','-','-','-','-','-'],
+		"28":['&nbsp;&nbsp;卖出回购金融资产款(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="28" charttitle="卖出回购金融资产款" unit="元">','4,999,937.50','-','4,999,937.50','-','4,999,937.50','-'],
+		"29":['&nbsp;&nbsp;应付证券清算款(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="29" charttitle="应付证券清算款" unit="元">','2,148,920.65','2,850,645.01','2,148,920.65','2,850,645.01','2,148,920.65','2,850,645.01'],
+		"30":['&nbsp;&nbsp;应付赎回款(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="30" charttitle="应付赎回款" unit="元">','-','-','-','-','-','-'],
+		"31":['&nbsp;&nbsp;应付管理人报酬(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="31" charttitle="应付管理人报酬" unit="元">','43,560.61','61,843.09','43,560.61','61,843.09','43,560.61','61,843.09'],
+		"32":['&nbsp;&nbsp;应付托管费(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="32" charttitle="应付托管费" unit="元">','8,712.10','12,368.63'],
+		"33":['&nbsp;&nbsp;应付销售服务费(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="33" charttitle="应付销售服务费" unit="元">','-','-','-','-','-','-'],
+		"34":['&nbsp;&nbsp;应付交易费用(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="34" charttitle="应付交易费用" unit="元">','159,683.40','78,527.31','159,683.40','78,527.31','159,683.40','78,527.31'],
+		"35":['&nbsp;&nbsp;应交税费(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="35" charttitle="应交税费" unit="元">','-','-','-','-','-','-'],
+		"36":['&nbsp;&nbsp;应付利息(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="36" charttitle="应付利息" unit="元">','2,896.35','-','2,896.35','-','2,896.35','-'],
+		"37":['&nbsp;&nbsp;应付利润(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="37" charttitle="应付利润" unit="元">','-','-','-','-','-','-'],
+		"38":['&nbsp;&nbsp;递延所得税负债(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="38" charttitle="递延所得税负债" unit="元">','-','-','-','-','-','-'],
+		"39":['&nbsp;&nbsp;其他负债(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="39" charttitle="其他负债" unit="元">','20,000.00','24,931.10','20,000.00','24,931.10','20,000.00','24,931.10'],
+		"40":['&nbsp;&nbsp;负债合计(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="40" charttitle="负债合计" unit="元">','7,383,710.61','3,028,315.14','7,383,710.61','3,028,315.14','7,383,710.61','3,028,315.14'],
+		"41":['<b>所有者权益</b>','','','','','',''],
+		"42":['&nbsp;&nbsp;实收集合计划(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="42" charttitle="实收集合计划" unit="元">','33,673,964.38','62,247,447.98','33,673,964.38','62,247,447.98','33,673,964.38','62,247,447.98'],
+		"43":['&nbsp;&nbsp;未分配利润(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="43" charttitle="未分配利润" unit="元">','19,662,563.52','6,250,061.12','19,662,563.52','6,250,061.12','19,662,563.52','6,250,061.12'],
+		"44":['&nbsp;&nbsp;所有者权益合计(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="44" charttitle="所有者权益合计" unit="元">','53,336,527.90','68,497,509.10','53,336,527.90','68,497,509.10','53,336,527.90','68,497,509.10'],
+		"45":['&nbsp;&nbsp;负债和所有者权益总计(<span class="moneyType float_none">元</span>)<img class="tooltip" src="" rel="45" charttitle="负债和所有者权益总计" unit="元">','60,720,238.51','71,525,824.24','60,720,238.51','71,525,824.24','60,720,238.51','71,525,824.24'],
+		"46":['公告日期','2015-03-26','2014-04-22','2013-03-26','2013-04-22','2012-03-26','2012-04-22']
+	},
+	
+	footer:{
+	}
+}
