@@ -1,0 +1,30 @@
+{
+  "license": "MIT",
+  "name": "jQuery.Plugins",
+  "version": "1.0.0",
+  "ignore": [
+    "**/.*",
+    "build",
+    "dist/cdn",
+    "speed",
+    "test",
+    "*.md",
+    "AUTHORS.txt",
+    "Gruntfile.js",
+    "package.json"
+  ],
+  "homepage": "https://github.com/Bing4Autodesk",
+  "authors": [
+    "chengbing@eastmoney.com"
+  ],
+  "description": "Some common ui plugins for JavaScript",
+  "main": "dist/jQuery.Plugins.js",
+  "dependencies": {
+    "jquery": ">= 1.7.0"
+  }
+  "keywords": [
+    "jquery.plugins",
+    "javascript",
+    "library"
+  ]
+}
