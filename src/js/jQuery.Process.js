@@ -1,19 +1,23 @@
 /**
- * Dialog.js
+ * Process.js
  *
- * @fileoverview  jQuery plugin that creates processing mask dialog.
+ * @fileoverview  jQuery plugin that creates loading mask dialog.
  * @link          
  * @author        Bing Cheng (bing.cheng@autodesk.com)
  * @version       1.0.0
  * @requires      jQuery 1.7+
  *
- * @license jQuery Dialog Plugin v1.0.0
+ * @license jQuery Process Plugin v1.0.0
  * 
  * Copyright 2015 Bing Cheng (bing.cheng@autodesk.com)
  * Released under the MIT license.
  * 
  */
-if ( typeof Object.create !== 'function' ) {
+ 
+ ///
+ /// Clone a new object
+ ///
+;if ( typeof Object.create !== 'function' ) {
     Object.create = function( obj ) {
         function F() {}
         F.prototype = obj;
@@ -21,174 +25,259 @@ if ( typeof Object.create !== 'function' ) {
     };
 };
 
+///
+/// Format string
+///
+String.prototype.format = function()
+{
+	var args = arguments;
+	return this.replace(/\{(\d+)\}/g,                
+		function(m,i){
+			return args[i];
+		});
+};
+
 (function($, window, document, undefined){
 	
-	$.Dialogcahe={
-	
-		singletonLoading:null
-	};
-	
 	///
-	/// jQuery component for dev to express loading process
+	/// jQuery loading plugin
 	///
 	var LoadingDialog={
-	
-		__init: function(opts){
 		
+		_selectorDom:'',
+		
+		_init: function(domID, opts){
 			var self=this;
-			opts=$.extend( {}, self.__options, opts );
-			self.options=opts;
 			
-			var $tipdom=$('<div></div>');
+			self._selectorDom=(arguments.length<=1)?'body':domID;
 			
-			$tipdom.attr('id','tipbox').removeClass().addClass('loading-box');
+			if(arguments.length<=1){
+				opts=domID;
+			}
+			
+			opts=$.extend( {}, self._properties, opts, true);
+			self.insProperities=opts;
+			self._selectorDom=domID;
+			
+			var position=self._caculatePostion();
+			self._createTipDom(position)._createMaskDom();
+			
+			$(window).scroll(function(event){
 				
-			if(document.body.scrollTop){
-				opts.scrollleft=document.body.scrollLeft;
-				opts.scrolltop=document.body.scrollTop;
-				opts.cheight=document.body.clientHeight;
-				opts.cwidth=document.body.clientWidth;
-			}
-			else{
-				opts.scrollleft=document.documentElement.scrollLeft;
-				opts.scrolltop=document.documentElement.scrollTop;
-				opts.cheight=document.documentElement.clientHeight;
-				opts.cwidth=document.documentElement.clientWidth;
-			}
-			
-			opts.iHeight=$tipdom.height();
-			
-			var hleft=(opts.cwidth-opts.iHeight)/2 + opts.scrollleft;
-			var vtop=(opts.cheight-opts.iHeight)/2+ opts.scrolltop;
-			
-			$tipdom.css('left','{0}px'.format(hleft)).css('top','{0}px'.format(vtop));
-			$tipdom.html(self.__template4tip.format(opts.tipinfo));
-			
-			$tipdom.css('float','none').css('z-index','9999999');
-			
-			self.$tipElem=$tipdom;
-			
-					
-		},
-		show: function(){
-			var self=this,$tipDom;
-			
-			if($('#tipbox').length==0){
-				$('body').append(self.$tipElem);
-			}
-			$tipDom=$('#tipbox');
-			
-			self.__showmask();
-			$tipDom.css('display','block'); 
-			
-			$(window).on('resize', function(){
-					self.__autooffset();
+				var position=self._caculatePostion();
+				self.$tipdom.css('left','{0}px'.format(position.left)).css('top','{0}px'.format(position.top));
+				
+				position=self._calculateMaskSize();
+				self.$mask.css('left','{0}px'.format(position.left)).css('top','{0}px'.format(position.top));
 			});
 			
+			return self;		
+		},
+		
+		_createTipDom:function(position){
+			var self=this;
+			var opts=(!self.insProperities)?self._properties:self.insProperities;
+
+			var $tipdom=$('<div></div>');
+			//$tipdom.attr('id','tipbox').addClass('loading_box');
+			$tipdom.addClass('loading_box');
+			$tipdom.html(self._template4tip.format(self._imagesName[opts.type],opts.tipinfo));
+			
+			$(self._selectorDom).append($tipdom);
+			
+			$tipdom.css('float','none').css('z-index','9999999').css('display','none');
+			$tipdom.css('left','{0}px'.format(position.left)).css('top','{0}px'.format(position.top));
+			
+			//self.$tipdom=$('#tipbox');
+			self.$tipdom=$('{0} .loading_box'.format(self._selectorDom));
+			
 			return self;
 		},
 		
-		close: function(){
-			var self=this,$tipDom=$('#tipbox');
+		_createMaskDom:function(){
+			var self=this, $mask=$('<div></div>');
 			
-			if($tipDom.length!=0){
-				$tipDom.css('display','none'); 
+			//$mask.attr('id','tipmask').css('display','none');
+			$mask.addClass('loading_mask').css('display','none');	
+			//if($('#tipmask').length===0)
+			if($('{0} .loading_mask'.format(self._selectorDom)).length===0)
+			{
+				$('{0}'.format((self._selectorDom&&self._selectorDom!='')?self._selectorDom:'body')).prepend($mask);
 			}
+			//$mask=$('#tipmask');
 			
-			self.__hidemask();
+			var maskSize=self._calculateMaskSize();
 			
-			return self;
-		},
-		
-		__showmask: function(){
-			if($('#tipmask').length==0){
-				$('body').prepend('<div id="tipmask" style="display:none;"></div>');
-			}
-			
-			var $mask=$('#tipmask');
-			$mask.css('left','{0}px'.format(0)).css('top','{0}px'.format(0)).css('position','absolute').css('zIndex','1');
+			$mask=$('{0} .loading_mask'.format(self._selectorDom));
+			$mask.css('left','{0}px'.format(maskSize.left)).css('top','{0}px'.format(maskSize.top)).css('position','absolute').css('zIndex','1')
+				.css('width','{0}px'.format(maskSize.width)).css('height','{0}px'.format(maskSize.height));
 				
 			if(document.all){
 				var ieversion = navigator["appVersion"].substr(22, 1);  
 				if (ieversion == 6 || ieversion == 5) { 
-					hideSelectBoxes(); 
 				}  
 			}
 			else{
 				//$mask.css('filter','alpha(opacity=20)')
 			}
 			
-			$mask.removeClass().addClass('loading-mask').css('display','block');
+			//$mask.addClass('loading_mask').css('display','none');	
 			
+			self.$mask=$mask;
+			
+			return self;
 		},
 		
-		__hidemask: function(){
-			var $mask=$('#tipmask');
-			$mask.css('display','none');
+		_caculatePostion:function(){
 			
-			var ieversion = navigator["appVersion"].substr(22, 1);  
-			if (ieversion == 6 || ieversion == 5) { 
-				showSelectBoxes(); 
-			}  
-		},
-		
-		__autooffset:function(){
-		
-			var self = this, $win=$(window),
-				config = self.__configuration,
-				$tipdom=$('#tipbox');
+			var self=this,position={};
+			
+			var scrollleft=$(self._selectorDom).scrollLeft(),
+				scrolltop=$(self._selectorDom).scrollTop();
 				
-			if($tipdom.length!=0){
+			var offset=$(self._selectorDom).offset(),iWidh=$(self._selectorDom).width(),iHeight=$(self._selectorDom).height();
 			
-				var area = [$tipdom.outerWidth(), $tipdom.outerHeight()];
+			if(self._selectorDom=='body'||self._selectorDom=='html'){
+				scrollleft=document.documentElement.scrollLeft  
+							|| document.body.scrollLeft || 0;
+				scrolltop=document.documentElement.scrollTop  
+							|| document.body.scrollTop || 0;
+				iHeight=document.documentElement.clientHeight  
+					|| document.body.clientHeight || 0;
+				iWidh=document.documentElement.clientWidth  
+					|| document.body.clientWidth || 0;
+			}				
+						
+			position={
+				left:offset.left+scrollleft+iWidh/2-self.insProperities.tipWith/2,
+				top:offset.top+scrolltop+iHeight/2-self.insProperities.tipHeight/2
+			};
 			
-				self.offsetTop = ($win.height() - area[1])/2;
-				self.offsetLeft = ($win.width() - area[0])/2;
+			return position;
+		},
 		
-				$tipdom.css({top: self.offsetTop, left: self.offsetLeft});
+		_calculateMaskSize:function(){
+			var self=this;
+			var scrollleft=$(self._selectorDom).scrollLeft(),
+				scrolltop=$(self._selectorDom).scrollTop();
+				
+							
+			var offset=$(self._selectorDom).offset(), wmask=$(self._selectorDom).width(),hmask=$(self._selectorDom).height();
+				
+			if(self._selectorDom=='body'||self._selectorDom=='html'){
+				scrollleft=document.documentElement.scrollLeft  
+							|| document.body.scrollLeft || 0;
+				scrolltop=document.documentElement.scrollTop  
+							|| document.body.scrollTop || 0;
+							
+				hmask=document.documentElement.clientHeight  
+							|| document.body.clientHeight || 0;
+				wmask=document.documentElement.clientWidth  
+							|| document.body.clientWidth || 0;
 			}
-		},
-		
-		__options:{
-			iwidth:120,iheight:0,
-			scrolltop:0,scrollleft:0,
-			cheight:0,cwidth:0,
+				
+			return{
+				top:offset.top+scrolltop,
+				left:offset.left+scrollleft,
+				width:wmask,
+				height:hmask
+			};
 			
-			tipinfo:'loading...'
 		},
 		
-		__template4tip:'<img src=\'src/skin/image/loading.gif\'/>  <p><span class=\'loadingTip\'>{0}</span></p>'
-		
-	};
-	
-	
-	$.LoadingDialog=function(options){
-		///
-		/// make sure the webpage to create loading instance only one time
-		///
-		if($.Dialogcahe.singletonLoading!=null){
-			return $.Dialogcahe.singletonLoading;
-		}
-		var dialogObj = Object.create( LoadingDialog );
-		dialogObj.__init( options);
-		
-		$.Dialogcahe.singletonLoading=dialogObj;
-		
-		return dialogObj;
-	};
-	
-	
-	///
-	/// Format string
-	///
-	String.prototype.format = function()
-	{
-		var args = arguments;
-		return this.replace(/\{(\d+)\}/g,                
-			function(m,i){
-				return args[i];
+		showLoading: function(){
+			var self=this;
+			
+			if(self.$mask){
+				self.$mask.css('display','block');
+			}
+			if(self.$tipdom){
+				self.$tipdom.css('display','block');
+			}
+			
+			$(window).on('resize', function(){
+				self._autooffset();
 			});
+			
+			return self;
+		},
+		
+		closeLoading: function(){
+			var self=this;
+			
+			if(self.$tipdom){
+				self.$tipdom.remove();
+			}
+			if(self.$mask){
+				self.$mask.remove();
+			}
+			
+			return self;
+		},
+		
+		_autooffset:function(){
+			var self = this, $win=$(window);	
+			
+			var position=self._caculatePostion();
+				
+			if(self.$tipdom){
+				
+				self.$tipdom.css('left','{0}px'.format(position.left)).css('top','{0}px'.format(position.top));
+			}
+			
+			var maskSize=self._calculateMaskSize();
+			if(self.$mask){
+				self.$mask.css('left','{0}px'.format(maskSize.left)).css('top','{0}px'.format(maskSize.top))
+					.css('width','{0}px'.format(maskSize.width)).css('height','{0}px'.format(maskSize.height));
+			}
+			return self;
+		},
+		
+		///
+		/// We should keep in mind that
+		/// all loading instance share this object
+		///
+		_properties:{
+			type:0,
+			tipinfo:'正在加载,请等待...',
+			tipWith:160,
+			tipHeight:70,
+		},
+		
+		_imagesName:['loading.gif','loading1.gif','loading2.gif','loading3.gif'],
+		_template4tip:'<img src="src/skin/image/{0}"/>  <p><span class="loading_tip">{1}</span></p>'
+		
 	};
+	
+	
+	// Root jQLoadingDialog object
+    var _jQLoadingDialog = $.fn.jQLoadingDialog;
+
+    var jQLoadingDialogWrapper = function (options) {
+		var domID=this.selector=='body'?'body':'{0}'.format(this.selector);
+        var dialogObj = Object.create( LoadingDialog );
+		return dialogObj._init(domID, options);
+    };
+
+
+    $.fn.extend(
+	{
+	    ///
+	    /// 提供接口供外函数调用
+	    ///
+	    jQLoadingDialog: jQLoadingDialogWrapper
+	});
+
+    ///
+    /// Noconflict api for jQLoadingDialog plugin
+    ///
+    $.fn.jQLoadingDialog.noConflict = function (aliasName) {
+
+        $.fn[aliasName] = jQLoadingDialogWrapper;
+        $.fn.jQLoadingDialog = _jQLoadingDialog;
+
+        return true;
+    };
 	
 })(jQuery, window, document)
 
