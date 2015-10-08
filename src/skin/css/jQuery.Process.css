@@ -16,8 +16,11 @@
 .loading_box{
 	position:absolute;
 	display:none;
+<<<<<<< HEAD
 	width:160px;
 	height:70px;
+=======
+>>>>>>> a40d06f4d4c403098309f4f4724113c3f54ab48d
 	border:2px solid #858585;
 	color: #858585;
 	font-family: "ËÎÌו";

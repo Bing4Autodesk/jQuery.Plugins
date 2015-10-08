@@ -8,6 +8,11 @@
 		<link rel="stylesheet" href="src/skin/css/jQuery.Process.css" />
 	</head>
 	<body>
-	
+			<my-directive id='test'><b>This is hello world</b></my-directive>
 	</body>
+	<script>
+		$(function(){
+			alert($('#test').html());
+		})
+	</script>
 </html>
