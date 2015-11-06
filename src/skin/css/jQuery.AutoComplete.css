@@ -1,0 +1,52 @@
+.em_auto_droplist{
+	border:1px solid #bdbdbd; 
+	/*
+	border-radius: 4px; 
+	*/
+	background-color:#fff; 
+	color:#666; 
+	font-size:14px; 
+	list-style-type:0; 
+	padding:0; 
+	margin:0; 
+	overflow:hidden;
+}
+
+.em_auto_droplist li{
+	padding:0px 6px; 
+	cursor:pointer;
+    overflow:hidden;
+    display:block;
+}
+.em_auto_droplist .on, .em_auto_droplist li:hover{
+	/*
+	background-color:#eee;
+	*/
+	background-color:#f34f09;
+}
+
+.em_auto_droplist span{
+   float:left;
+   width:94px;
+   line-height: 1.8;
+   overflow:hidden;
+   text-overflow:ellipsis;
+   -o-text-overflow:ellipsis;
+   white-space:nowrap;
+   padding-left:1px;
+   padding-right:5px;
+}
+
+.em_auto_droplist span:last-child{
+   width:auto;
+}
+
+.em_auto_droplist strong{
+   color:red;
+}
+
+.em_auto_droplist .on span {
+}
+.em_auto_droplist .on strong {
+  color: #000000;
+}
