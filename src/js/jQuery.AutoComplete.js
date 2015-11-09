@@ -1,5 +1,5 @@
 /**
- * EmAutoComplete.js
+ * AutoComplete.js
  *
  * @fileoverview  自动完成控件.
  * @link          
@@ -121,6 +121,9 @@ if (typeof fEncodeChinese !== 'function') {
                 }
             }
         };
+        if (params.cloumnsName && params.cloumnsName.length > 0) {
+            ownProperties = params.cloumnsName;
+        }
 
         data = params.data;
 
@@ -219,8 +222,6 @@ if (typeof fEncodeChinese !== 'function') {
                     var $span = $selectedLi.children('span').first();
                     eleLi.get($currentTarget.indexSelected) && $($currentTarget).val(currentData).attr('data-key', currentKey);
 
-                    //alert($('#js-iptorgs').attr('data-key'));
-
                     $currentUl.css("visibility", "hidden");
 
                     stopDefault(e); return;
@@ -250,9 +251,9 @@ if (typeof fEncodeChinese !== 'function') {
             if (!$currentUl) {
                 return;
             }
-
-            params.data = data;
-            var htmlList = createDropDownList(params)
+            var currentParams = ($currentTarget.params && $currentTarget.params) ? $currentTarget.params : params;
+            currentParams.data = data;
+            var htmlList = createDropDownList(currentParams)
             $currentUl.html(htmlList);
             if (htmlList && htmlList != '') {
 
@@ -275,14 +276,12 @@ if (typeof fEncodeChinese !== 'function') {
             isChoice: true,         //是否为Choice终端
             apiKey: 'keyWizard',
             key:'id',               //选中项后在input标签内填入的值
-            ranges: ["\"HS\"", "\"GG\"", "\"SB\"", "\"JJ\"", "\"MGGP\""]
+            ranges: ["\"HS\"", "\"GG\"", "\"SB\"", "\"JJ\"", "\"MGGP\""],
+            cloumnsName:[]
         };
         // 覆盖当前默认参数
         var params = $.extend({}, defaults, options || {});
-
-        //var $currentUl = null, $currentTarget = null;
-
-
+       
         $(_self).each(function () {
 
             var self = this; self.indexSelected = 0, self.params = params;
@@ -291,7 +290,6 @@ if (typeof fEncodeChinese !== 'function') {
 
             $ulElem.css({
                 position: "absolute",
-                //marginTop: self.offsetHeight + 2,
                 left: $(self).offset().left,
                 top: $(self).offset().top + self.offsetHeight,
                 minWidth: self.offsetWidth - 2,
@@ -303,14 +301,20 @@ if (typeof fEncodeChinese !== 'function') {
                 var target = e && e.target, $selTarget = null, $currentUl = null;
                 if (target) {
 
-                    $selTarget = (target.tagName.toLowerCase() === 'li') ? $(target).children('span').first() : $(target).parent().children('span').first();
-                    $currentUl = (target.tagName.toLowerCase() === 'li') ? $(target) : $(target).parent();
+                    $selTarget = (target.tagName.toLowerCase() === 'li') ? $(target).children('span').first() : (target.tagName.toLowerCase() === 'span') ?
+                        $(target).parent().children('span').first() : $(target).parent().parent().children('span').first();
+
+                    /*
+                    $currentUl = (target.tagName.toLowerCase() === 'li') ? $(target) : (target.tagName.toLowerCase() === 'span') ?
+                        $(target).parent() : $(target).parent().parent();
+                    */
+
+                    $currentUl = $(target).closest("li");
 
                 }
-                if ($selTarget) {
-                    //$(self).val($selTarget.html());
+                if ($selTarget && $currentUl) {
+
                     $(self).val($currentUl.attr('data')).attr('data-key', $currentUl.attr('key'));
-                    //alert($('#js-iptorgs').attr('data-key'));
                     
                 }
 
@@ -350,7 +354,7 @@ if (typeof fEncodeChinese !== 'function') {
                     var target = e && e.target;
                     if (target == self && self.value) {
                         if (params.isChoice) {
-                            console.log(params.apiKey + ':{"callbackFunName":"' + "globalCallback" + '","key":"' + fEncodeChinese(self.value) + '","ranges":[' + params.ranges + ']}');
+                            //console.log(params.apiKey + ':{"callbackFunName":"' + "globalCallback" + '","key":"' + fEncodeChinese(self.value) + '","ranges":[' + params.ranges + ']}');
                             window.open(params.apiKey + ':{"callbackFunName":"' + "globalCallback" + '","key":"' + fEncodeChinese(self.value) + '","ranges":[' + params.ranges + ']}', '_self');
                         }
                         else {
@@ -372,4 +376,4 @@ if (typeof fEncodeChinese !== 'function') {
     };
 
 
-})($, window, document);
+})(jQuery, window, document);
