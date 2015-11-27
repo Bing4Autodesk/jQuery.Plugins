@@ -59,7 +59,7 @@ if (typeof fEncodeChinese !== 'function') {
 };
 
 ; (function ($, window, document, undefined) {
-
+	
     ///
     /// Choice终端只能从全局window查找回调函数
     /// 只能将对象也设置全局的，对此我也很无奈。。。
@@ -178,6 +178,9 @@ if (typeof fEncodeChinese !== 'function') {
     };
 
     function fnHandKeyDown(e) {
+        if (!$currentUl) {
+            return;
+        }
         var eleLi = $currentUl.find("li");
 
         if ($currentUl.css(visibility) === "visible") {
@@ -224,6 +227,7 @@ if (typeof fEncodeChinese !== 'function') {
 
                     $currentUl.css("visibility", "hidden");
 
+
                     stopDefault(e); return;
                 }
                 case KEY.TAB: case KEY.ESC: {
@@ -243,7 +247,7 @@ if (typeof fEncodeChinese !== 'function') {
         }
     };
 
-    $.fn.emAutoComplete = function (options) {
+    $.fn.autoComplete = function (options) {
 
         var _self = this;
 
@@ -255,8 +259,8 @@ if (typeof fEncodeChinese !== 'function') {
             currentParams.data = data;
             var htmlList = createDropDownList(currentParams)
             $currentUl.html(htmlList);
-            if (htmlList && htmlList != '') {
 
+            if (htmlList && htmlList != '' && $.trim($currentTarget.value) != '') {
                 $currentUl.css(visibility, "visible");
 
             }
@@ -290,9 +294,9 @@ if (typeof fEncodeChinese !== 'function') {
 
             $ulElem.css({
                 position: "absolute",
-                left: $(self).offset().left,
-                top: $(self).offset().top + self.offsetHeight,
-                minWidth: self.offsetWidth - 2,
+                marginTop: 1,
+                left: $(self).position().left,
+				minWidth: self.offsetWidth - 2,
                 visibility: "hidden",
                 zIndex: params.zIndex
             });
@@ -304,15 +308,11 @@ if (typeof fEncodeChinese !== 'function') {
                     $selTarget = (target.tagName.toLowerCase() === 'li') ? $(target).children('span').first() : (target.tagName.toLowerCase() === 'span') ?
                         $(target).parent().children('span').first() : $(target).parent().parent().children('span').first();
 
-                    /*
                     $currentUl = (target.tagName.toLowerCase() === 'li') ? $(target) : (target.tagName.toLowerCase() === 'span') ?
                         $(target).parent() : $(target).parent().parent();
-                    */
-
-                    $currentUl = $(target).closest("li");
 
                 }
-                if ($selTarget && $currentUl) {
+                if ($selTarget) {
 
                     $(self).val($currentUl.attr('data')).attr('data-key', $currentUl.attr('key'));
                     
@@ -354,7 +354,7 @@ if (typeof fEncodeChinese !== 'function') {
                     var target = e && e.target;
                     if (target == self && self.value) {
                         if (params.isChoice) {
-                            //console.log(params.apiKey + ':{"callbackFunName":"' + "globalCallback" + '","key":"' + fEncodeChinese(self.value) + '","ranges":[' + params.ranges + ']}');
+                            console.log(params.apiKey + ':{"callbackFunName":"' + "globalCallback" + '","key":"' + fEncodeChinese(self.value) + '","ranges":[' + params.ranges + ']}');
                             window.open(params.apiKey + ':{"callbackFunName":"' + "globalCallback" + '","key":"' + fEncodeChinese(self.value) + '","ranges":[' + params.ranges + ']}', '_self');
                         }
                         else {
