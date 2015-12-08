@@ -10,7 +10,7 @@
  */
 
 // 格式化字符串（如果为定义该函数则定义该函数）
-; if (typeof String.prototype.format !== 'function') {
+if (typeof String.prototype.format !== 'function') {
     String.prototype.format = function () {
         var args = arguments;
         return this.replace(/\{(\d+)\}/g,
@@ -18,11 +18,11 @@
                 return args[i];
             });
     };
-};
+}
 
 // 阻止分享功能模块内部Dom元素冒泡
 if (typeof stopBubble !== 'function') {
-    function stopBubble(event) {
+    stopBubble = function (event) {
         if (event && event.stopPropagation) {
             // 针对其他浏览器
             event.stopPropagation();
@@ -31,12 +31,12 @@ if (typeof stopBubble !== 'function') {
             // 针对IE浏览器
             window.event.cancelBubble = true;
         }
-    }
-};
+    };
+}
 
 // 阻止分享控件内部Dom元素默认行为 (W3C)
 if (typeof stopDefault !== 'function') {
-    function stopDefault(event) {
+    stopDefault = function (event) {
         if (event && event.preventDefault) {
             // 针对其他浏览器
             event.preventDefault();
@@ -47,16 +47,16 @@ if (typeof stopDefault !== 'function') {
         }
 
         return false;
-    }
-};
+    };
+}
 
 // 为中文编码
 if (typeof fEncodeChinese !== 'function') {
 
-    function fEncodeChinese(srcString) {
+    fEncodeChinese = function (srcString) {
         return encodeURIComponent(encodeURIComponent(srcString));
-    }
-};
+    };
+}
 
 ; (function ($, window, document, undefined) {
 	
@@ -103,7 +103,7 @@ if (typeof fEncodeChinese !== 'function') {
         else {
             callback(source);
         }
-    };
+    }
 
     function createDropDownList(params) {
         /// <summary>
@@ -120,7 +120,8 @@ if (typeof fEncodeChinese !== 'function') {
                     ownProperties.push(property);
                 }
             }
-        };
+        }
+
         if (params.cloumnsName && params.cloumnsName.length > 0) {
             ownProperties = params.cloumnsName;
         }
@@ -149,7 +150,7 @@ if (typeof fEncodeChinese !== 'function') {
 
 
         return htmlDropList;
-    };
+    }
 
     function showDropDownList($ulElem, params, isIndexChange) {
         /// <summary>
@@ -175,13 +176,14 @@ if (typeof fEncodeChinese !== 'function') {
             asynAccessData(params.source, window.globalCallback);
 
         }
-    };
+    }
 
     function fnHandKeyDown(e) {
         if (!$currentUl) {
             return;
         }
-        var eleLi = $currentUl.find("li");
+        var eleLi = $currentUl.find("li"),
+            index = 0;
 
         if ($currentUl.css(visibility) === "visible") {
             switch (e.keyCode) {
@@ -191,7 +193,7 @@ if (typeof fEncodeChinese !== 'function') {
                     if ($currentTarget.indexSelected < 0) {
                         $currentTarget.indexSelected = -1 + eleLi.length;
                     } 
-                    for (var index = 0; index < eleLi.length; index++) {
+                    for (index = 0; index < eleLi.length; index++) {
                         if (index != $currentTarget.indexSelected) {
                             $(eleLi[index]).removeClass('on');
                         }
@@ -208,7 +210,7 @@ if (typeof fEncodeChinese !== 'function') {
                     if ($currentTarget.indexSelected >= eleLi.length) {
                         $currentTarget.indexSelected = 0;
                     }
-                    for (var index = 0; index < eleLi.length; index++) {
+                    for (index = 0; index < eleLi.length; index++) {
                         if (index != $currentTarget.indexSelected) {
                             $(eleLi[index]).removeClass('on');
                         }
@@ -221,7 +223,7 @@ if (typeof fEncodeChinese !== 'function') {
                 }
                 case KEY.ENTER: {
                     var $selectedLi = eleLi.eq($currentTarget.indexSelected);
-                    var currentData = $selectedLi.attr('data'), currentKey = $selectedLi.attr('key')
+                    var currentData = $selectedLi.attr('data'), currentKey = $selectedLi.attr('key');
                     var $span = $selectedLi.children('span').first();
                     eleLi.get($currentTarget.indexSelected) && $($currentTarget).val(currentData).attr('data-key', currentKey);
 
@@ -245,7 +247,7 @@ if (typeof fEncodeChinese !== 'function') {
                 }
             }
         }
-    };
+    }
 
     $.fn.autoComplete = function (options) {
 
@@ -257,18 +259,21 @@ if (typeof fEncodeChinese !== 'function') {
             }
             var currentParams = ($currentTarget.params && $currentTarget.params) ? $currentTarget.params : params;
             currentParams.data = data;
-            var htmlList = createDropDownList(currentParams)
+            var htmlList = createDropDownList(currentParams);
             $currentUl.html(htmlList);
 
-            if (htmlList && htmlList != '' && $.trim($currentTarget.value) != '') {
-                $currentUl.css(visibility, "visible");
+            if (htmlList && htmlList !== '' && $.trim($currentTarget.value) !== '') {
+                $currentUl.css({
+                    left: $($currentTarget).position().left,
+                    visibility: "visible"
+                });
 
             }
             else {
                 $currentUl.css(visibility, "hidden");
             }
 
-        };
+        }
 
         window.globalCallback = fnCallback;
 
@@ -288,7 +293,7 @@ if (typeof fEncodeChinese !== 'function') {
        
         $(_self).each(function () {
 
-            var self = this; self.indexSelected = 0, self.params = params;
+            var self = this; self.indexSelected = 0;self.params = params;
 
             var $ulElem = $('<ul></ul>').html(createDropDownList(params));
 
@@ -334,7 +339,7 @@ if (typeof fEncodeChinese !== 'function') {
             if (!window.XMLHttpRequest) {
                 // IE6的宽度
                 $ulElem.width(self.offsetWidth - 2);
-            };
+            }
 
             // 不同浏览器的不同事件
             isModern ? $(self).bind("input", function () {
