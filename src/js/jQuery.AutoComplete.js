@@ -75,7 +75,7 @@ if (typeof fEncodeChinese !== 'function') {
     var isModern = typeof window.screenX === "number",
         visibility = "visibility";
 
-    function asynAccessData(source, callback) {
+    function asynAccessData(source, queryParams, callback) {
         /// <summary>
         /// 异步请求数据
         /// </summary>
@@ -93,10 +93,10 @@ if (typeof fEncodeChinese !== 'function') {
             $.ajax({
                 type: "GET",
                 url: source,
-                data: null,
+                data: queryParams,
                 dataType: "json",
                 success: function (data) {
-                    callback(data);
+                    callback(typeof data === 'string' ? JSON.parse(data) : data);
                 }
             });
         }
@@ -173,7 +173,8 @@ if (typeof fEncodeChinese !== 'function') {
             window.open(params.apiKey + ':{"callbackFunName":"' + "globalCallback" + '","key":"' + fEncodeChinese(self.value) + '","ranges":[' + params.ranges + ']}', '_self');
         }
         else {
-            asynAccessData(params.source, window.globalCallback);
+            var pQuery = $.extend({}, params.params, { 'key': fEncodeChinese(self.value) });
+            asynAccessData(params.source, pQuery, window.globalCallback);
 
         }
     }
@@ -243,7 +244,8 @@ if (typeof fEncodeChinese !== 'function') {
                     window.open(params.apiKey + ':{"callbackFunName":"' + "globalCallback" + '","key":"' + $currentTarget.value + '","ranges":[' + params.ranges + ']}', '_self');
                 }
                 else {
-                    asynAccessData(params.source, window.globalCallback);
+                    var pQuery = $.extend({}, params.params, { 'key': fEncodeChinese(self.value) });
+                    asynAccessData(params.source, pQuery, window.globalCallback);
                 }
             }
         }
@@ -278,18 +280,20 @@ if (typeof fEncodeChinese !== 'function') {
         window.globalCallback = fnCallback;
 
         var defaults = {
-            className: "em_auto_droplist",
-            source: null,
-            data: null,
-            zIndex: 16,
-            isChoice: true,         //是否为Choice终端
+            source: null,             //source字段可以是url或者function
+            data: null,               //data字段用于缓存查询到的结果
+            params: null,             // 针对ajax请求传递额外的参数
+            cloumnsName: [],          //指定显示哪些列
+            key: 'id',                //选中项后在input标签内填入的值
+
+            //以下3个字段是单独针对Choice中段使用
+            isChoice: true,          //是否为Choice终端
             apiKey: 'keyWizard',
-            key:'id',               //选中项后在input标签内填入的值
-            ranges: ["\"HS\"", "\"GG\"", "\"SB\"", "\"JJ\"", "\"MGGP\""],
-            cloumnsName:[]
+            ranges: ["\"HS\"", "\"GG\"", "\"SB\"", "\"JJ\"", "\"MGGP\""]
         };
         // 覆盖当前默认参数
-        var params = $.extend({}, defaults, options || {});
+        var params = $.extend({}, defaults, options || {}),
+            className = 'em_auto_droplist';
        
         $(_self).each(function () {
 
@@ -303,10 +307,10 @@ if (typeof fEncodeChinese !== 'function') {
                 left: $(self).position().left,
 				minWidth: self.offsetWidth - 2,
                 visibility: "hidden",
-                zIndex: params.zIndex
+                zIndex: 16
             });
 
-            $ulElem.addClass(params.className).bind("click", function (e) {
+            $ulElem.addClass(className).bind("click", function (e) {
                 var target = e && e.target, $selTarget = null, $currentUl = null;
                 if (target) {
 
@@ -363,7 +367,8 @@ if (typeof fEncodeChinese !== 'function') {
                             window.open(params.apiKey + ':{"callbackFunName":"' + "globalCallback" + '","key":"' + fEncodeChinese(self.value) + '","ranges":[' + params.ranges + ']}', '_self');
                         }
                         else {
-                            asynAccessData(params.source, window.globalCallback);
+                            var pQuery = $.extend({}, params.params, { 'key': fEncodeChinese(self.value) });
+                            asynAccessData(params.source, pQuery, window.globalCallback);
                         }
 
                     }
