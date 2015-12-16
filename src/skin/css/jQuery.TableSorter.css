@@ -1,0 +1,36 @@
+﻿.arrowSort {
+    width: 12px;
+    height: 12px;
+}
+
+.arrowSort span:nth-child(1),
+.arrowSort span:nth-child(2) {
+    display: block;
+    position: absolute;
+    left: 2px;
+    width: 10px;
+    height: 6px;
+    cursor: pointer;
+}
+
+.arrowSort span:nth-child(1),
+.arrowSort-down span:nth-child(1) {
+    top: 0;
+    background: url(/Areas/Stock/Res/Images/PortfolioManagement/icon-up.png) no-repeat center top;
+}
+
+.arrowSort span:nth-child(2),
+.arrowSort-up span:nth-child(2) {
+    top: 6px;
+    background: url(/Areas/Stock/Res/Images/PortfolioManagement/icon-down.png) no-repeat center top;
+}
+
+.arrowSort-up span:nth-child(1) {
+    top: 0;
+    background: url(/Areas/Stock/Res/Images/PortfolioManagement/icon-up-on.png) no-repeat center top;
+}
+
+.arrowSort-down span:nth-child(2) {
+    top: 6px;
+    background: url(/Areas/Stock/Res/Images/PortfolioManagement/icon-down-on.png) no-repeat center top;
+}
