@@ -208,10 +208,10 @@ if (typeof String.prototype.isNumerical !== 'function') {
     ///
     /// Noconflict api for jQTableSorter plugin
     ///
-    $.fn.jQPagination.noConflict = function (aliasName) {
+    $.fn.jQTableSorter.noConflict = function (aliasName) {
 
         $.fn[aliasName] = jQTableSorterWrapper;
-        $.fn.jQPagination = _jQTableSorter;
+        $.fn.jQTableSorter = _jQTableSorter;
 
         return true;
     };
