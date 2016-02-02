@@ -3,7 +3,7 @@
  *
  * @fileoverview  自动完成控件.
  * @link          
- * @author        Cheng Bing (chengbing@eastmoney.com)
+ * @author        Cheng Bing (824203428@qq.com)
  * @requires      jQuery 1.7+
  * 
  * 

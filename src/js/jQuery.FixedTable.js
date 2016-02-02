@@ -4,13 +4,13 @@
  *
  * @fileoverview  jQuery plugin that creates table.
  * @link          
- * @author        Cheng Bing (chengbing@eastmoney)
+ * @author        Cheng Bing (824203428@qq.com)
  * @version       1.0.0
  * @requires      jQuery 1.7+
  *
  * @license jQuery Table Plugin v1.0.0
  * 
- * Copyright 2015 Cheng Bing (chengbing@eastmoney.com)
+ * Copyright 2015 Cheng Bing (824203428@qq.com)
  * Released under the MIT license.
  * 
  */

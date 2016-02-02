@@ -3,13 +3,13 @@
  *
  * @fileoverview  jQuery plugin that highlights key words.
  * @link          
- * @author        Bing Cheng (chengbing@eastmoney.com)
+ * @author        Bing Cheng (824203428@qq.com)
  * @version       1.0.0
  * @requires      jQuery 1.7+
  *
  * @license jQuery Highlighter Plugin v1.0.0
  * 
- * Copyright 2015 Bing Cheng (chengbing@eastmoney.com)
+ * Copyright 2015 Bing Cheng (824203428@qq.com)
  * 
  * 
  */
